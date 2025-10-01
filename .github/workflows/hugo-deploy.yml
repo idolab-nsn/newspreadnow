@@ -1,33 +1,48 @@
-name: hugo-deploy
+name: Deploy Hugo site to Pages
+
 on:
   push:
-    branches: [main]
+    branches: [ "main" ]
+  workflow_dispatch:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - uses: peaceiris/actions-hugo@v3
         with:
-          node-version: "18"
-
-      - run: npm install -g postcss postcss-cli autoprefixer
-
-      - uses: peaceiris/actions-hugo@v2
-        with:
-          hugo-version: "0.120.4"
+          hugo-version: '0.150.1'
           extended: true
 
-      - run: hugo mod clean && hugo mod get -u github.com/theNewDynamic/gohugo-theme-ananke
-
-      - run: hugo --minify
-
-      - uses: peaceiris/actions-gh-pages@v3
+      - uses: actions/setup-node@v4
         with:
-          github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./public
+          node-version: '22'
+
+      - run: npm install postcss postcss-cli autoprefixer
+
+      - run: |
+          mkdir -p content/posts
+          echo "---`ntitle: 'First'`ndate: 2025-10-01T00:00:00Z`ndraft: false`n---`nHello Hugo!" > content/posts/first.md
+
+      - run: hugo --gc --minify --cleanDestinationDir
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
