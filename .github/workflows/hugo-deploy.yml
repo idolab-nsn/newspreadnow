@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: '22'
       - run: npm install postcss postcss-cli autoprefixer
-      - run: hugo --minify
+      - run: hugo --gc --minify --cleanDestinationDir
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
