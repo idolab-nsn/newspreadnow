@@ -11,15 +11,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
+
       - run: npm install -g postcss postcss-cli autoprefixer
+
       - uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: "0.120.4"
           extended: true
+
+      - run: hugo mod clean && hugo mod get -u github.com/theNewDynamic/gohugo-theme-ananke
+
       - run: hugo --minify
+
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GH_TOKEN }}
