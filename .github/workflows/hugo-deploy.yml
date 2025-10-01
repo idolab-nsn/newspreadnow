@@ -1,48 +1,26 @@
-name: Deploy Hugo site to Pages
+name: Hugo Deploy
 
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch:
-
-permissions:
-  contents: write
-  pages: write
-  id-token: write
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: peaceiris/actions-hugo@v3
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.150.1'
+          hugo-version: '0.120.4'
           extended: true
-
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
-
       - run: npm install postcss postcss-cli autoprefixer
-
-      - run: |
-          mkdir -p content/posts
-          echo "---`ntitle: 'First'`ndate: 2025-10-01T00:00:00Z`ndraft: false`n---`nHello Hugo!" > content/posts/first.md
-
-      - run: hugo --gc --minify --cleanDestinationDir
-
+      - run: hugo --minify
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: actions/deploy-pages@v4
