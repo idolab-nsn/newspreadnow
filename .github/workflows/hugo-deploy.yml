@@ -8,19 +8,30 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: '0.150.1'
           extended: true
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: npm install postcss postcss-cli autoprefixer
-      - run: hugo --gc --minify --cleanDestinationDir
-      - uses: actions/upload-pages-artifact@v3
+
+      - name: Install PostCSS deps
+        run: npm install
+
+      - name: Build Hugo
+        run: hugo --gc --minify --cleanDestinationDir
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
-      - uses: actions/deploy-pages@v4
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
