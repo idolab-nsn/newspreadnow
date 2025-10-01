@@ -1,4 +1,4 @@
-theme = "ananke"
+theme = "hugo-coder"
 
 # Force static CSS
 [[params.customCSS]]
