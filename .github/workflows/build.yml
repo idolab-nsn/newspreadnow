@@ -4,38 +4,37 @@ on:
   push:
     branches: [ "main" ]
 jobs:
-  us:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: US Build
-        run: echo "[OK] Build Workflow - US"
-  uk:
-    runs-on: ubuntu-latest
-    steps:
-      - name: UK Build
-        run: echo "[OK] Build Workflow - UK"
-  ca:
-    runs-on: ubuntu-latest
-    steps:
-      - name: CA Build
-        run: echo "[OK] Build Workflow - CA"
-  au:
-    runs-on: ubuntu-latest
-    steps:
-      - name: AU Build
-        run: echo "[OK] Build Workflow - AU"
-  de:
-    runs-on: ubuntu-latest
-    steps:
-      - name: DE Build
-        run: echo "[OK] Build Workflow - DE"
-  ch:
-    runs-on: ubuntu-latest
-    steps:
-      - name: CH Build
-        run: echo "[OK] Build Workflow - CH"
-  sg:
-    runs-on: ubuntu-latest
-    steps:
-      - name: SG Build
-        run: echo "[OK] Build Workflow - SG"
+      - uses: actions/checkout@v3
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.150.1'
+          extended: true
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install NPM packages
+        run: npm ci
+
+      - name: Run Hugo Build
+        shell: bash
+        run: |
+          hugo --minify
+          echo "[OK] Hugo build finished"
+
+      - name: Save Build Logs
+        run: |
+          echo "Build completed at $(date)" >> build_log.txt
+          du -sh public >> build_log.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: build_log.txt
