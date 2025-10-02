@@ -4,38 +4,40 @@ on:
   push:
     branches: [ "main" ]
 jobs:
-  us:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: US Deploy
-        run: echo "[OK] Deploy Workflow - US"
-  uk:
-    runs-on: ubuntu-latest
-    steps:
-      - name: UK Deploy
-        run: echo "[OK] Deploy Workflow - UK"
-  ca:
-    runs-on: ubuntu-latest
-    steps:
-      - name: CA Deploy
-        run: echo "[OK] Deploy Workflow - CA"
-  au:
-    runs-on: ubuntu-latest
-    steps:
-      - name: AU Deploy
-        run: echo "[OK] Deploy Workflow - AU"
-  de:
-    runs-on: ubuntu-latest
-    steps:
-      - name: DE Deploy
-        run: echo "[OK] Deploy Workflow - DE"
-  ch:
-    runs-on: ubuntu-latest
-    steps:
-      - name: CH Deploy
-        run: echo "[OK] Deploy Workflow - CH"
-  sg:
-    runs-on: ubuntu-latest
-    steps:
-      - name: SG Deploy
-        run: echo "[OK] Deploy Workflow - SG"
+      - uses: actions/checkout@v3
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.150.1'
+          extended: true
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install NPM packages
+        run: npm ci
+
+      - name: Build Hugo site
+        run: hugo --minify
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+
+      - name: Save Deploy Logs
+        run: |
+          echo "Deploy completed at $(date)" >> deploy_log.txt
+          ls -lah public >> deploy_log.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deploy-logs
+          path: deploy_log.txt
