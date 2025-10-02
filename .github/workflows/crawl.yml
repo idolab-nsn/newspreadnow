@@ -8,96 +8,59 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Submit to Google
-        run: curl -X POST "https://www.google.com/ping?sitemap=https://newspreadnow.com/us/sitemap.xml"
-      - name: Submit to Bing
-        run: curl -X GET "https://www.bing.com/ping?sitemap=https://newspreadnow.com/us/sitemap.xml"
-      - name: Submit to IndexNow
-        run: |
-          curl -H 'Content-Type: application/json' \
-          -d '{"host":"newspreadnow.com","urlList":["https://newspreadnow.com/us/sitemap.xml"]}' \
-          "https://api.indexnow.org/indexnow"
 
-  uk:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
       - name: Submit to Google
-        run: curl -X POST "https://www.google.com/ping?sitemap=https://newspreadnow.com/uk/sitemap.xml"
-      - name: Submit to Bing
-        run: curl -X GET "https://www.bing.com/ping?sitemap=https://newspreadnow.com/uk/sitemap.xml"
-      - name: Submit to IndexNow
         run: |
-          curl -H 'Content-Type: application/json' \
-          -d '{"host":"newspreadnow.com","urlList":["https://newspreadnow.com/uk/sitemap.xml"]}' \
-          "https://api.indexnow.org/indexnow"
+          STATUS=0
+          for i in 1 2 3; do
+            STATUS=404 && break
+            echo "Retrying Google ()..."
+            sleep 2
+          done
+          if [ "" -eq 200 ]; then
+            echo "[OK] Google Submit Success"
+          else
+            echo "[ERROR] Google Submit Failed with "
+            exit 1
+          fi
 
-  ca:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Submit to Google
-        run: curl -X POST "https://www.google.com/ping?sitemap=https://newspreadnow.com/ca/sitemap.xml"
       - name: Submit to Bing
-        run: curl -X GET "https://www.bing.com/ping?sitemap=https://newspreadnow.com/ca/sitemap.xml"
-      - name: Submit to IndexNow
         run: |
-          curl -H 'Content-Type: application/json' \
-          -d '{"host":"newspreadnow.com","urlList":["https://newspreadnow.com/ca/sitemap.xml"]}' \
-          "https://api.indexnow.org/indexnow"
+          STATUS=0
+          for i in 1 2 3; do
+            STATUS=410 && break
+            echo "Retrying Bing ()..."
+            sleep 2
+          done
+          if [ "" -eq 200 ]; then
+            echo "[OK] Bing Submit Success"
+          else
+            echo "[ERROR] Bing Submit Failed with "
+            exit 1
+          fi
 
-  au:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Submit to Google
-        run: curl -X POST "https://www.google.com/ping?sitemap=https://newspreadnow.com/au/sitemap.xml"
-      - name: Submit to Bing
-        run: curl -X GET "https://www.bing.com/ping?sitemap=https://newspreadnow.com/au/sitemap.xml"
       - name: Submit to IndexNow
         run: |
-          curl -H 'Content-Type: application/json' \
-          -d '{"host":"newspreadnow.com","urlList":["https://newspreadnow.com/au/sitemap.xml"]}' \
-          "https://api.indexnow.org/indexnow"
+          STATUS=0
+          for i in 1 2 3; do
+            STATUS=000 https://api.indexnow.org/indexnow && break
+            echo "Retrying IndexNow ()..."
+            sleep 2
+          done
+          if [ "" -eq 200 ]; then
+            echo "[OK] IndexNow Submit Success"
+          else
+            echo "[ERROR] IndexNow Submit Failed with "
+            exit 1
+          fi
 
-  de:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Submit to Google
-        run: curl -X POST "https://www.google.com/ping?sitemap=https://newspreadnow.com/de/sitemap.xml"
-      - name: Submit to Bing
-        run: curl -X GET "https://www.bing.com/ping?sitemap=https://newspreadnow.com/de/sitemap.xml"
-      - name: Submit to IndexNow
+      - name: Save Logs
         run: |
-          curl -H 'Content-Type: application/json' \
-          -d '{"host":"newspreadnow.com","urlList":["https://newspreadnow.com/de/sitemap.xml"]}' \
-          "https://api.indexnow.org/indexnow"
+          echo "Google=" >> crawl_log_us.txt
+          echo "Bing=" >> crawl_log_us.txt
+          echo "IndexNow=" >> crawl_log_us.txt
 
-  ch:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Submit to Google
-        run: curl -X POST "https://www.google.com/ping?sitemap=https://newspreadnow.com/ch/sitemap.xml"
-      - name: Submit to Bing
-        run: curl -X GET "https://www.bing.com/ping?sitemap=https://newspreadnow.com/ch/sitemap.xml"
-      - name: Submit to IndexNow
-        run: |
-          curl -H 'Content-Type: application/json' \
-          -d '{"host":"newspreadnow.com","urlList":["https://newspreadnow.com/ch/sitemap.xml"]}' \
-          "https://api.indexnow.org/indexnow"
-
-  sg:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Submit to Google
-        run: curl -X POST "https://www.google.com/ping?sitemap=https://newspreadnow.com/sg/sitemap.xml"
-      - name: Submit to Bing
-        run: curl -X GET "https://www.bing.com/ping?sitemap=https://newspreadnow.com/sg/sitemap.xml"
-      - name: Submit to IndexNow
-        run: |
-          curl -H 'Content-Type: application/json' \
-          -d '{"host":"newspreadnow.com","urlList":["https://newspreadnow.com/sg/sitemap.xml"]}' \
-          "https://api.indexnow.org/indexnow"
+      - uses: actions/upload-artifact@v3
+        with:
+          name: crawl-logs-us
+          path: crawl_log_us.txt
