@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
+permissions:
+  contents: write
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -33,9 +35,7 @@ jobs:
           publish_dir: ./public
 
       - name: Save Deploy Logs
-        run: |
-          echo "Deploy completed at $(date)" >> deploy_log.txt
-          ls -lah public >> deploy_log.txt
+        run: echo "Deploy completed at $(date)" >> deploy_log.txt
 
       - uses: actions/upload-artifact@v4
         with:
