@@ -1,6 +1,11 @@
 name: GSC Submit
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "15 0 * * *"
+concurrency:
+  group: gsc
+  cancel-in-progress: true
 jobs:
   submit:
     runs-on: ubuntu-latest
