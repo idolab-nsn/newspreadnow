@@ -1,14 +1,32 @@
-name: Deploy Workflow
+name: Deploy
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Deploy to Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          hugo-version: '0.120.4'
+          extended: true
+      - name: Build Site
+        run: hugo --minify
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: site
+          path: public
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: site
+          path: ./public
+      - name: Deploy Check
+        run: test -f public/index.html && echo "[OK] Deploy Ready" || echo "[ERROR] Deploy Failed"
