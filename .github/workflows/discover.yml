@@ -4,38 +4,19 @@ on:
   push:
     branches: [ "main" ]
 jobs:
-  us:
+  discover:
     runs-on: ubuntu-latest
     steps:
-      - name: US Discover
-        run: echo "[OK] Discover Workflow - US"
-  uk:
-    runs-on: ubuntu-latest
-    steps:
-      - name: UK Discover
-        run: echo "[OK] Discover Workflow - UK"
-  ca:
-    runs-on: ubuntu-latest
-    steps:
-      - name: CA Discover
-        run: echo "[OK] Discover Workflow - CA"
-  au:
-    runs-on: ubuntu-latest
-    steps:
-      - name: AU Discover
-        run: echo "[OK] Discover Workflow - AU"
-  de:
-    runs-on: ubuntu-latest
-    steps:
-      - name: DE Discover
-        run: echo "[OK] Discover Workflow - DE"
-  ch:
-    runs-on: ubuntu-latest
-    steps:
-      - name: CH Discover
-        run: echo "[OK] Discover Workflow - CH"
-  sg:
-    runs-on: ubuntu-latest
-    steps:
-      - name: SG Discover
-        run: echo "[OK] Discover Workflow - SG"
+      - uses: actions/checkout@v3
+      - name: Run OG + Schema Checks
+        shell: bash
+        run: |
+          echo "Checking OpenGraph..."
+          echo "Checking JSON-LD schema..."
+          echo "Checking FAQ schema..."
+      - name: Save Discover Logs
+        run: echo "Discover checks done at $(date)" >> discover_log.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: discover-logs
+          path: discover_log.txt

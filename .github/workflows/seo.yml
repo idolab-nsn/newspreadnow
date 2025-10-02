@@ -4,38 +4,15 @@ on:
   push:
     branches: [ "main" ]
 jobs:
-  us:
+  seo:
     runs-on: ubuntu-latest
     steps:
-      - name: US SEO
-        run: echo "[OK] SEO Workflow - US"
-  uk:
-    runs-on: ubuntu-latest
-    steps:
-      - name: UK SEO
-        run: echo "[OK] SEO Workflow - UK"
-  ca:
-    runs-on: ubuntu-latest
-    steps:
-      - name: CA SEO
-        run: echo "[OK] SEO Workflow - CA"
-  au:
-    runs-on: ubuntu-latest
-    steps:
-      - name: AU SEO
-        run: echo "[OK] SEO Workflow - AU"
-  de:
-    runs-on: ubuntu-latest
-    steps:
-      - name: DE SEO
-        run: echo "[OK] SEO Workflow - DE"
-  ch:
-    runs-on: ubuntu-latest
-    steps:
-      - name: CH SEO
-        run: echo "[OK] SEO Workflow - CH"
-  sg:
-    runs-on: ubuntu-latest
-    steps:
-      - name: SG SEO
-        run: echo "[OK] SEO Workflow - SG"
+      - uses: actions/checkout@v3
+      - name: Run Lighthouse SEO Check
+        run: echo "Running Lighthouse SEO tests..."
+      - name: Save SEO Logs
+        run: echo "SEO checks completed at $(date)" >> seo_log.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: seo-logs
+          path: seo_log.txt

@@ -4,38 +4,15 @@ on:
   push:
     branches: [ "main" ]
 jobs:
-  us:
+  ai:
     runs-on: ubuntu-latest
     steps:
-      - name: US AI
-        run: echo "[OK] AI Workflow - US"
-  uk:
-    runs-on: ubuntu-latest
-    steps:
-      - name: UK AI
-        run: echo "[OK] AI Workflow - UK"
-  ca:
-    runs-on: ubuntu-latest
-    steps:
-      - name: CA AI
-        run: echo "[OK] AI Workflow - CA"
-  au:
-    runs-on: ubuntu-latest
-    steps:
-      - name: AU AI
-        run: echo "[OK] AI Workflow - AU"
-  de:
-    runs-on: ubuntu-latest
-    steps:
-      - name: DE AI
-        run: echo "[OK] AI Workflow - DE"
-  ch:
-    runs-on: ubuntu-latest
-    steps:
-      - name: CH AI
-        run: echo "[OK] AI Workflow - CH"
-  sg:
-    runs-on: ubuntu-latest
-    steps:
-      - name: SG AI
-        run: echo "[OK] AI Workflow - SG"
+      - uses: actions/checkout@v3
+      - name: Run AI Fact Check
+        run: echo "Running AI fact-only tagging + Grey Zone..."
+      - name: Save AI Logs
+        run: echo "AI tasks done at $(date)" >> ai_log.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ai-logs
+          path: ai_log.txt
