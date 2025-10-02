@@ -1,0 +1,13 @@
+name: Bing Submit
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Submit sitemap to Bing
+        run: |
+          curl -X POST \
+            "https://ssl.bing.com/webmaster/api.svc/json/SubmitSiteMap?apikey=${{ secrets.BING_API_KEY }}&siteUrl=https://newspreadnow.com&sitemapUrl=https://newspreadnow.com/sitemap.xml"

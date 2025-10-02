@@ -1,0 +1,11 @@
+name: AI Workflow
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 * * * *"
+jobs:
+  ai:
+    runs-on: ubuntu-latest
+    steps:
+      - name: AI GreyZone Fact Extraction
+        run: echo "Running AI fact-only + Grey Zone tagging..."

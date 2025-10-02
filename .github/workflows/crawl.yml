@@ -1,0 +1,30 @@
+name: Crawl Workflow
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"
+jobs:
+  sitemap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Generate Sitemap
+        run: hugo --minify
+  indexnow:
+    runs-on: ubuntu-latest
+    needs: sitemap
+    steps:
+      - name: Submit Sitemap to IndexNow
+        run: curl -X POST "https://api.indexnow.org/IndexNow" -H 'Content-Type: application/json' -d "{\"host\":\"newspreadnow.com\",\"key\":\"${{ secrets.INDEXNOW_KEY }}\",\"keyLocation\":\"https://newspreadnow.com/${{ secrets.INDEXNOW_KEY }}.txt\",\"urlList\":[\"https://newspreadnow.com/sitemap.xml\"]}"
+  gsc:
+    runs-on: ubuntu-latest
+    needs: sitemap
+    steps:
+      - name: Submit Sitemap to GSC
+        run: python scripts/gsc_submit.py
+  bing:
+    runs-on: ubuntu-latest
+    needs: sitemap
+    steps:
+      - name: Submit Sitemap to Bing
+        run: curl -X POST "https://ssl.bing.com/webmaster/api.svc/json/SubmitSiteMap?apikey=${{ secrets.BING_API_KEY }}&siteUrl=https://newspreadnow.com&sitemapUrl=https://newspreadnow.com/sitemap.xml"

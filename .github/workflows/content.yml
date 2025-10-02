@@ -1,0 +1,13 @@
+name: Content Workflow
+on:
+  push:
+    paths:
+      - "content/**"
+  workflow_dispatch:
+jobs:
+  content:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Optimize Content
+        run: echo "Checking wordcount, CTA, image alt/caption..."

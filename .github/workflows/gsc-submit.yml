@@ -1,0 +1,22 @@
+name: GSC Submit
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: Install deps
+        run: pip install google-api-python-client google-auth google-auth-httplib2 google-auth-oauthlib
+      - name: Submit sitemap to GSC
+        env:
+          GSC_SERVICE_JSON: ${{ secrets.GSC_SERVICE_JSON }}
+        run: |
+          echo "$GSC_SERVICE_JSON" > sa.json
+          python scripts/gsc_submit.py
