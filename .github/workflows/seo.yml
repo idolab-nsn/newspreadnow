@@ -1,0 +1,11 @@
+name: SEO
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+jobs:
+  seo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Placeholder
+        run: echo "[OK] SEO Workflow Running"

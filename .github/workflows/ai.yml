@@ -1,0 +1,11 @@
+name: AI
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+jobs:
+  ai:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Placeholder
+        run: echo "[OK] AI Workflow Running"
