@@ -8,53 +8,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Submit US to Google
+      - name: Submit US to Google/Bing/IndexNow
         run: |
-          STATUS=0
-          for i in 1 2 3; do
-            STATUS=404 && break
-            echo "Retrying Google-US ()..."
-            sleep 2
+          for ENGINE in Google Bing IndexNow; do
+            STATUS=0
+            for i in 1 2 3; do
+              if [ "" = "Google" ]; then
+                STATUS=404
+              elif [ "" = "Bing" ]; then
+                STATUS=410
+              else
+                STATUS=000 https://api.indexnow.org/indexnow
+              fi
+              [ "" -eq 200 ] && break
+              echo "Retrying -US ()..."
+              sleep 2
+            done
+            if [ "" -eq 200 ]; then
+              echo "[OK]  Submit US Success"
+            else
+              echo "[ERROR]  Submit US Failed with "
+              exit 1
+            fi
+            echo "=" >> crawl_log_us.txt
           done
-          if [ "" -eq 200 ]; then
-            echo "[OK] Google Submit US Success"
-          else
-            echo "[ERROR] Google Submit US Failed with "
-            exit 1
-          fi
-      - name: Submit US to Bing
-        run: |
-          STATUS=0
-          for i in 1 2 3; do
-            STATUS=410 && break
-            echo "Retrying Bing-US ()..."
-            sleep 2
-          done
-          if [ "" -eq 200 ]; then
-            echo "[OK] Bing Submit US Success"
-          else
-            echo "[ERROR] Bing Submit US Failed with "
-            exit 1
-          fi
-      - name: Submit US to IndexNow
-        run: |
-          STATUS=0
-          for i in 1 2 3; do
-            STATUS=000 https://api.indexnow.org/indexnow && break
-            echo "Retrying IndexNow-US ()..."
-            sleep 2
-          done
-          if [ "" -eq 200 ]; then
-            echo "[OK] IndexNow Submit US Success"
-          else
-            echo "[ERROR] IndexNow Submit US Failed with "
-            exit 1
-          fi
-      - name: Save US Logs
-        run: |
-          echo "Google=" >> crawl_log_us.txt
-          echo "Bing=" >> crawl_log_us.txt
-          echo "IndexNow=" >> crawl_log_us.txt
       - uses: actions/upload-artifact@v3
         with:
           name: crawl-logs-us
@@ -64,82 +41,196 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Submit UK to Google
-        run: curl -X POST "https://www.google.com/ping?sitemap=https://newspreadnow.com/uk/sitemap.xml"
-      - name: Submit UK to Bing
-        run: curl -X GET "https://www.bing.com/ping?sitemap=https://newspreadnow.com/uk/sitemap.xml"
-      - name: Submit UK to IndexNow
+      - name: Submit UK to Google/Bing/IndexNow
         run: |
-          curl -H 'Content-Type: application/json' \
-          -d '{"host":"newspreadnow.com","urlList":["https://newspreadnow.com/uk/sitemap.xml"]}' \
-          "https://api.indexnow.org/indexnow"
+          for ENGINE in Google Bing IndexNow; do
+            STATUS=0
+            for i in 1 2 3; do
+              if [ "" = "Google" ]; then
+                STATUS=404
+              elif [ "" = "Bing" ]; then
+                STATUS=410
+              else
+                STATUS=000 https://api.indexnow.org/indexnow
+              fi
+              [ "" -eq 200 ] && break
+              echo "Retrying -UK ()..."
+              sleep 2
+            done
+            if [ "" -eq 200 ]; then
+              echo "[OK]  Submit UK Success"
+            else
+              echo "[ERROR]  Submit UK Failed with "
+              exit 1
+            fi
+            echo "=" >> crawl_log_uk.txt
+          done
+      - uses: actions/upload-artifact@v3
+        with:
+          name: crawl-logs-uk
+          path: crawl_log_uk.txt
 
   ca:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Submit CA to Google
-        run: curl -X POST "https://www.google.com/ping?sitemap=https://newspreadnow.com/ca/sitemap.xml"
-      - name: Submit CA to Bing
-        run: curl -X GET "https://www.bing.com/ping?sitemap=https://newspreadnow.com/ca/sitemap.xml"
-      - name: Submit CA to IndexNow
+      - name: Submit CA to Google/Bing/IndexNow
         run: |
-          curl -H 'Content-Type: application/json' \
-          -d '{"host":"newspreadnow.com","urlList":["https://newspreadnow.com/ca/sitemap.xml"]}' \
-          "https://api.indexnow.org/indexnow"
+          for ENGINE in Google Bing IndexNow; do
+            STATUS=0
+            for i in 1 2 3; do
+              if [ "" = "Google" ]; then
+                STATUS=404
+              elif [ "" = "Bing" ]; then
+                STATUS=410
+              else
+                STATUS=000 https://api.indexnow.org/indexnow
+              fi
+              [ "" -eq 200 ] && break
+              echo "Retrying -CA ()..."
+              sleep 2
+            done
+            if [ "" -eq 200 ]; then
+              echo "[OK]  Submit CA Success"
+            else
+              echo "[ERROR]  Submit CA Failed with "
+              exit 1
+            fi
+            echo "=" >> crawl_log_ca.txt
+          done
+      - uses: actions/upload-artifact@v3
+        with:
+          name: crawl-logs-ca
+          path: crawl_log_ca.txt
 
   au:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Submit AU to Google
-        run: curl -X POST "https://www.google.com/ping?sitemap=https://newspreadnow.com/au/sitemap.xml"
-      - name: Submit AU to Bing
-        run: curl -X GET "https://www.bing.com/ping?sitemap=https://newspreadnow.com/au/sitemap.xml"
-      - name: Submit AU to IndexNow
+      - name: Submit AU to Google/Bing/IndexNow
         run: |
-          curl -H 'Content-Type: application/json' \
-          -d '{"host":"newspreadnow.com","urlList":["https://newspreadnow.com/au/sitemap.xml"]}' \
-          "https://api.indexnow.org/indexnow"
+          for ENGINE in Google Bing IndexNow; do
+            STATUS=0
+            for i in 1 2 3; do
+              if [ "" = "Google" ]; then
+                STATUS=404
+              elif [ "" = "Bing" ]; then
+                STATUS=410
+              else
+                STATUS=000 https://api.indexnow.org/indexnow
+              fi
+              [ "" -eq 200 ] && break
+              echo "Retrying -AU ()..."
+              sleep 2
+            done
+            if [ "" -eq 200 ]; then
+              echo "[OK]  Submit AU Success"
+            else
+              echo "[ERROR]  Submit AU Failed with "
+              exit 1
+            fi
+            echo "=" >> crawl_log_au.txt
+          done
+      - uses: actions/upload-artifact@v3
+        with:
+          name: crawl-logs-au
+          path: crawl_log_au.txt
 
   de:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Submit DE to Google
-        run: curl -X POST "https://www.google.com/ping?sitemap=https://newspreadnow.com/de/sitemap.xml"
-      - name: Submit DE to Bing
-        run: curl -X GET "https://www.bing.com/ping?sitemap=https://newspreadnow.com/de/sitemap.xml"
-      - name: Submit DE to IndexNow
+      - name: Submit DE to Google/Bing/IndexNow
         run: |
-          curl -H 'Content-Type: application/json' \
-          -d '{"host":"newspreadnow.com","urlList":["https://newspreadnow.com/de/sitemap.xml"]}' \
-          "https://api.indexnow.org/indexnow"
+          for ENGINE in Google Bing IndexNow; do
+            STATUS=0
+            for i in 1 2 3; do
+              if [ "" = "Google" ]; then
+                STATUS=404
+              elif [ "" = "Bing" ]; then
+                STATUS=410
+              else
+                STATUS=000 https://api.indexnow.org/indexnow
+              fi
+              [ "" -eq 200 ] && break
+              echo "Retrying -DE ()..."
+              sleep 2
+            done
+            if [ "" -eq 200 ]; then
+              echo "[OK]  Submit DE Success"
+            else
+              echo "[ERROR]  Submit DE Failed with "
+              exit 1
+            fi
+            echo "=" >> crawl_log_de.txt
+          done
+      - uses: actions/upload-artifact@v3
+        with:
+          name: crawl-logs-de
+          path: crawl_log_de.txt
 
   ch:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Submit CH to Google
-        run: curl -X POST "https://www.google.com/ping?sitemap=https://newspreadnow.com/ch/sitemap.xml"
-      - name: Submit CH to Bing
-        run: curl -X GET "https://www.bing.com/ping?sitemap=https://newspreadnow.com/ch/sitemap.xml"
-      - name: Submit CH to IndexNow
+      - name: Submit CH to Google/Bing/IndexNow
         run: |
-          curl -H 'Content-Type: application/json' \
-          -d '{"host":"newspreadnow.com","urlList":["https://newspreadnow.com/ch/sitemap.xml"]}' \
-          "https://api.indexnow.org/indexnow"
+          for ENGINE in Google Bing IndexNow; do
+            STATUS=0
+            for i in 1 2 3; do
+              if [ "" = "Google" ]; then
+                STATUS=404
+              elif [ "" = "Bing" ]; then
+                STATUS=410
+              else
+                STATUS=000 https://api.indexnow.org/indexnow
+              fi
+              [ "" -eq 200 ] && break
+              echo "Retrying -CH ()..."
+              sleep 2
+            done
+            if [ "" -eq 200 ]; then
+              echo "[OK]  Submit CH Success"
+            else
+              echo "[ERROR]  Submit CH Failed with "
+              exit 1
+            fi
+            echo "=" >> crawl_log_ch.txt
+          done
+      - uses: actions/upload-artifact@v3
+        with:
+          name: crawl-logs-ch
+          path: crawl_log_ch.txt
 
   sg:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Submit SG to Google
-        run: curl -X POST "https://www.google.com/ping?sitemap=https://newspreadnow.com/sg/sitemap.xml"
-      - name: Submit SG to Bing
-        run: curl -X GET "https://www.bing.com/ping?sitemap=https://newspreadnow.com/sg/sitemap.xml"
-      - name: Submit SG to IndexNow
+      - name: Submit SG to Google/Bing/IndexNow
         run: |
-          curl -H 'Content-Type: application/json' \
-          -d '{"host":"newspreadnow.com","urlList":["https://newspreadnow.com/sg/sitemap.xml"]}' \
-          "https://api.indexnow.org/indexnow"
+          for ENGINE in Google Bing IndexNow; do
+            STATUS=0
+            for i in 1 2 3; do
+              if [ "" = "Google" ]; then
+                STATUS=404
+              elif [ "" = "Bing" ]; then
+                STATUS=410
+              else
+                STATUS=000 https://api.indexnow.org/indexnow
+              fi
+              [ "" -eq 200 ] && break
+              echo "Retrying -SG ()..."
+              sleep 2
+            done
+            if [ "" -eq 200 ]; then
+              echo "[OK]  Submit SG Success"
+            else
+              echo "[ERROR]  Submit SG Failed with "
+              exit 1
+            fi
+            echo "=" >> crawl_log_sg.txt
+          done
+      - uses: actions/upload-artifact@v3
+        with:
+          name: crawl-logs-sg
+          path: crawl_log_sg.txt
