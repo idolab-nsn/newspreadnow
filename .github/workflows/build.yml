@@ -1,16 +1,15 @@
-name: Build Workflow
+name: Build
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
+concurrency:
+  group: build
+  cancel-in-progress: true
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
-        with:
-          hugo-version: '0.150.1'
-          extended: true
-      - name: Build Hugo site
-        run: hugo --gc --minify
+      - name: Run Placeholder
+        run: echo "[OK] Build Placeholder Running"

@@ -1,12 +1,15 @@
-name: Discover Workflow
+name: Discover
 on:
-  schedule:
-    - cron: "0 */6 * * *"
   workflow_dispatch:
+  push:
+    branches: [ "main" ]
+concurrency:
+  group: discover
+  cancel-in-progress: true
 jobs:
   discover:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Check Discover readiness
-        run: echo "Validating OG tags, JSON-LD, FAQ schema..."
+      - name: Run Placeholder
+        run: echo "[OK] Discover Placeholder Running"

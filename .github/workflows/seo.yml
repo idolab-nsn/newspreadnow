@@ -1,12 +1,15 @@
-name: SEO Workflow
+name: SEO
 on:
-  schedule:
-    - cron: "0 3 * * *"
   workflow_dispatch:
+  push:
+    branches: [ "main" ]
+concurrency:
+  group: seo
+  cancel-in-progress: true
 jobs:
   seo:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Run SEO checks
-        run: echo "Running Lighthouse, hreflang, canonical checks..."
+      - name: Run Placeholder
+        run: echo "[OK] SEO Placeholder Running"

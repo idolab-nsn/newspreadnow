@@ -1,13 +1,15 @@
-name: Content Workflow
+name: Content
 on:
-  push:
-    paths:
-      - "content/**"
   workflow_dispatch:
+  push:
+    branches: [ "main" ]
+concurrency:
+  group: content
+  cancel-in-progress: true
 jobs:
   content:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Optimize Content
-        run: echo "Checking wordcount, CTA, image alt/caption..."
+      - name: Run Placeholder
+        run: echo "[OK] Content Placeholder Running"
