@@ -1,0 +1,41 @@
+name: Content
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+jobs:
+  us:
+    runs-on: ubuntu-latest
+    steps:
+      - name: US Content
+        run: echo "[OK] Content Workflow - US"
+  uk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: UK Content
+        run: echo "[OK] Content Workflow - UK"
+  ca:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CA Content
+        run: echo "[OK] Content Workflow - CA"
+  au:
+    runs-on: ubuntu-latest
+    steps:
+      - name: AU Content
+        run: echo "[OK] Content Workflow - AU"
+  de:
+    runs-on: ubuntu-latest
+    steps:
+      - name: DE Content
+        run: echo "[OK] Content Workflow - DE"
+  ch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CH Content
+        run: echo "[OK] Content Workflow - CH"
+  sg:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SG Content
+        run: echo "[OK] Content Workflow - SG"

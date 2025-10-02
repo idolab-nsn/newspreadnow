@@ -1,0 +1,41 @@
+name: Build
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+jobs:
+  us:
+    runs-on: ubuntu-latest
+    steps:
+      - name: US Build
+        run: echo "[OK] Build Workflow - US"
+  uk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: UK Build
+        run: echo "[OK] Build Workflow - UK"
+  ca:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CA Build
+        run: echo "[OK] Build Workflow - CA"
+  au:
+    runs-on: ubuntu-latest
+    steps:
+      - name: AU Build
+        run: echo "[OK] Build Workflow - AU"
+  de:
+    runs-on: ubuntu-latest
+    steps:
+      - name: DE Build
+        run: echo "[OK] Build Workflow - DE"
+  ch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CH Build
+        run: echo "[OK] Build Workflow - CH"
+  sg:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SG Build
+        run: echo "[OK] Build Workflow - SG"

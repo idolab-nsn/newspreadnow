@@ -1,0 +1,41 @@
+name: Discover
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+jobs:
+  us:
+    runs-on: ubuntu-latest
+    steps:
+      - name: US Discover
+        run: echo "[OK] Discover Workflow - US"
+  uk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: UK Discover
+        run: echo "[OK] Discover Workflow - UK"
+  ca:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CA Discover
+        run: echo "[OK] Discover Workflow - CA"
+  au:
+    runs-on: ubuntu-latest
+    steps:
+      - name: AU Discover
+        run: echo "[OK] Discover Workflow - AU"
+  de:
+    runs-on: ubuntu-latest
+    steps:
+      - name: DE Discover
+        run: echo "[OK] Discover Workflow - DE"
+  ch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CH Discover
+        run: echo "[OK] Discover Workflow - CH"
+  sg:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SG Discover
+        run: echo "[OK] Discover Workflow - SG"
