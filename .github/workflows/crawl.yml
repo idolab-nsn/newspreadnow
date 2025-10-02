@@ -32,7 +32,7 @@ jobs:
             fi
             echo "=" >> crawl_log_us.txt
           done
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: crawl-logs-us
           path: crawl_log_us.txt
@@ -65,7 +65,7 @@ jobs:
             fi
             echo "=" >> crawl_log_uk.txt
           done
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: crawl-logs-uk
           path: crawl_log_uk.txt
@@ -98,7 +98,7 @@ jobs:
             fi
             echo "=" >> crawl_log_ca.txt
           done
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: crawl-logs-ca
           path: crawl_log_ca.txt
@@ -131,7 +131,7 @@ jobs:
             fi
             echo "=" >> crawl_log_au.txt
           done
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: crawl-logs-au
           path: crawl_log_au.txt
@@ -164,7 +164,7 @@ jobs:
             fi
             echo "=" >> crawl_log_de.txt
           done
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: crawl-logs-de
           path: crawl_log_de.txt
@@ -197,7 +197,7 @@ jobs:
             fi
             echo "=" >> crawl_log_ch.txt
           done
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: crawl-logs-ch
           path: crawl_log_ch.txt
@@ -230,7 +230,7 @@ jobs:
             fi
             echo "=" >> crawl_log_sg.txt
           done
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: crawl-logs-sg
           path: crawl_log_sg.txt
