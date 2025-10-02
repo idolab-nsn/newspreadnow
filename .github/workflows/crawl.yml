@@ -1,0 +1,41 @@
+name: Crawl
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+jobs:
+  us:
+    runs-on: ubuntu-latest
+    steps:
+      - name: US Crawl
+        run: echo "[OK] Crawl Workflow - US"
+  uk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: UK Crawl
+        run: echo "[OK] Crawl Workflow - UK"
+  ca:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CA Crawl
+        run: echo "[OK] Crawl Workflow - CA"
+  au:
+    runs-on: ubuntu-latest
+    steps:
+      - name: AU Crawl
+        run: echo "[OK] Crawl Workflow - AU"
+  de:
+    runs-on: ubuntu-latest
+    steps:
+      - name: DE Crawl
+        run: echo "[OK] Crawl Workflow - DE"
+  ch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CH Crawl
+        run: echo "[OK] Crawl Workflow - CH"
+  sg:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SG Crawl
+        run: echo "[OK] Crawl Workflow - SG"
