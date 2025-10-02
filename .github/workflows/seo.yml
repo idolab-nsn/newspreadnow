@@ -1,0 +1,41 @@
+name: SEO
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+jobs:
+  us:
+    runs-on: ubuntu-latest
+    steps:
+      - name: US SEO
+        run: echo "[OK] SEO Workflow - US"
+  uk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: UK SEO
+        run: echo "[OK] SEO Workflow - UK"
+  ca:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CA SEO
+        run: echo "[OK] SEO Workflow - CA"
+  au:
+    runs-on: ubuntu-latest
+    steps:
+      - name: AU SEO
+        run: echo "[OK] SEO Workflow - AU"
+  de:
+    runs-on: ubuntu-latest
+    steps:
+      - name: DE SEO
+        run: echo "[OK] SEO Workflow - DE"
+  ch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CH SEO
+        run: echo "[OK] SEO Workflow - CH"
+  sg:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SG SEO
+        run: echo "[OK] SEO Workflow - SG"

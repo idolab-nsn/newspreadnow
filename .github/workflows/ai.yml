@@ -1,0 +1,41 @@
+name: AI
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+jobs:
+  us:
+    runs-on: ubuntu-latest
+    steps:
+      - name: US AI
+        run: echo "[OK] AI Workflow - US"
+  uk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: UK AI
+        run: echo "[OK] AI Workflow - UK"
+  ca:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CA AI
+        run: echo "[OK] AI Workflow - CA"
+  au:
+    runs-on: ubuntu-latest
+    steps:
+      - name: AU AI
+        run: echo "[OK] AI Workflow - AU"
+  de:
+    runs-on: ubuntu-latest
+    steps:
+      - name: DE AI
+        run: echo "[OK] AI Workflow - DE"
+  ch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CH AI
+        run: echo "[OK] AI Workflow - CH"
+  sg:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SG AI
+        run: echo "[OK] AI Workflow - SG"
