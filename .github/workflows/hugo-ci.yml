@@ -21,3 +21,8 @@ jobs:
           extended: true
       - run: npm ci
       - run: hugo --minify
+      - name: Copy country sitemaps
+        run: |
+          for r in us uk ca au de ch sg; do
+            cp public/$r/sitemap.xml public/sitemap-$r.xml || true
+          done
