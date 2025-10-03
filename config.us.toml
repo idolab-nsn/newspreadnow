@@ -1,4 +1,5 @@
-baseURL = "https://idolab-nsn.github.io/newspreadnow/"
+baseURL = "https://us.newspreadnow.com/"
 languageCode = "en-us"
 title = "Enson Site"
 theme = "ananke"
+contentDir = "content/us"
