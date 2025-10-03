@@ -25,4 +25,10 @@ jobs:
         run: |
           for r in us uk ca au de ch sg; do
             cp public/$r/sitemap.xml public/sitemap-$r.xml || true
+            iconv -f utf-8 -t utf-8 -c public/sitemap-$r.xml > tmp.xml && mv tmp.xml public/sitemap-$r.xml
+          done
+      - name: Copy country sitemaps
+        run: |
+          for r in us uk ca au de ch sg; do
+            cp public/$r/sitemap.xml public/sitemap-$r.xml || true
           done
