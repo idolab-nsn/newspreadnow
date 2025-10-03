@@ -1,0 +1,4 @@
+baseURL = "https://idolab-nsn.github.io/newspreadnow/"
+languageCode = "en-us"
+title = "Enson Site"
+theme = "ananke"
